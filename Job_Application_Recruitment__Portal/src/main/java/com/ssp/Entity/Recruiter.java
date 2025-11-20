@@ -6,7 +6,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +31,17 @@ public class Recruiter {
     private String name;
     private String companyName;  
     private String department;
-
+//---New Field Added While Creating Fronted Part I Got To Know These Field Should Also Added
+    private String designation;
+    private String location;
+    private Long phone;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CompanyType companyType;
+    
+  //----------4 Field Added---------  
+    
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference  // Parent side: Recruiter → Jobs
     private List<Job> jobs = new ArrayList<>();

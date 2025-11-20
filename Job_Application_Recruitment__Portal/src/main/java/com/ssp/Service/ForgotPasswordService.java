@@ -7,6 +7,7 @@ import java.util.TimerTask;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssp.DTO.ForgotPasswordRequest;
@@ -33,6 +34,9 @@ public class ForgotPasswordService implements IForgotPasswordService{
 	
 	@Autowired
 	private IEmailService emailService;
+	
+	@Autowired
+	private PasswordEncoder encoder;
 	
 	private static final long OTP_EXPIRY_SEC=120;
 	
@@ -99,7 +103,7 @@ public class ForgotPasswordService implements IForgotPasswordService{
 	        UserAccount user = userRepo.findByEmail(req.getEmail())
 	                .orElseThrow(() -> new RuntimeException("User not found"));
 
-	        user.setPassword(req.getNewPassword()); // encode if needed
+	        user.setPassword(encoder.encode(req.getNewPassword())); // encode if needed
 	        userRepo.save(user);
 
 	        cacheManager.getCache("otpCache").evict(req.getEmail());
