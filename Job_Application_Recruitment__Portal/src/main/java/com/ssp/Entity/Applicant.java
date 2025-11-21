@@ -36,7 +36,7 @@ public class Applicant {
 	private String name;
 	
 	@NonNull
-	private Long phoneNumber;
+	private String phoneNumber;
 
 //	@NonNull
 	private String resumeLink;

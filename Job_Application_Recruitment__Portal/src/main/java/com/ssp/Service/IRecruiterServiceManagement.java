@@ -10,7 +10,7 @@ public interface IRecruiterServiceManagement {
 
 	String registerRecruiterDetails(RecruiterDTO recruiter);
 	List<RecruiterResponseDTO>viewAllRecruiterDetails();
-	String viewByIdRecruiterDetails(Long id);
+	RecruiterResponseDTO viewByIdRecruiterDetails(Long id);
 	String removeById(Long id);
 	String updateDetails(RecruiterUpdateDTO recruiter);
 	

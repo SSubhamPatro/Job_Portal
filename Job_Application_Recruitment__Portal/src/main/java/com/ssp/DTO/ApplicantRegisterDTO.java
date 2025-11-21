@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssp.utility.ValidPhoneNumber;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Digits;
@@ -33,9 +34,8 @@ public class ApplicantRegisterDTO {
 	@Size(min = 6, max = 20, message = "Password Must Be Between 6 And 20 Characters")
 	private String password;
 
-	@NotNull(message = "Phone Number Is Required")
-	@Digits(integer = 10, fraction = 0, message = "Phone Number Must Be 10 Digits")
-	private Long phoneNumber;
+	@ValidPhoneNumber
+	private String phoneNumber;
 
 	@Schema(description = "Resume file URL, Automatically Generated After Upload", accessMode = Schema.AccessMode.READ_ONLY)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)

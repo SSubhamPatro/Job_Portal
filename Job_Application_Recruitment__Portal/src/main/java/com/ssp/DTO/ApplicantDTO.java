@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssp.utility.ValidPhoneNumber;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Digits;
@@ -28,9 +29,9 @@ public class ApplicantDTO {
 	@Email(message = "Invalid Email Format")
 	private String email;
 
-	@NotNull(message = "Phone Number Is Required")
-	@Digits(integer = 10, fraction = 0, message = "Phone number must be 10 digits")
-	private Long phoneNumber;
+
+	@ValidPhoneNumber
+	private String phoneNumber;
 
 	@Schema(description = "Resume file URL, automatically generated after upload", accessMode = Schema.AccessMode.READ_ONLY)
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)

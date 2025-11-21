@@ -18,6 +18,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Entity
@@ -34,10 +35,11 @@ public class Recruiter {
 //---New Field Added While Creating Fronted Part I Got To Know These Field Should Also Added
     private String designation;
     private String location;
-    private Long phone;
+    private String phone;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
+    @NonNull
     private CompanyType companyType;
     
   //----------4 Field Added---------  

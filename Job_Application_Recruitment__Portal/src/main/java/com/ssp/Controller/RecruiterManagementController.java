@@ -63,9 +63,9 @@ public class RecruiterManagementController {
 	@Operation(summary = "SHOW BY ID DETAILS",description = "It's Showing By The Id Details ")
 	public ResponseEntity<ApiResponse> viewByIdRecrutierDetails(@PathVariable Long id) {
 
-		String byId = service.viewByIdRecruiterDetails(id);
+		 RecruiterResponseDTO byIdRecruiterDetails = service.viewByIdRecruiterDetails(id);
 
-		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS,byId));
+		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS,byIdRecruiterDetails));
 	}
 
 	@DeleteMapping("/delete/{id}")
