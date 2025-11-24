@@ -76,7 +76,7 @@ public class ApplicationManagemetController {
 		String deleteApplicationById = service.deleteApplicationById(id);
 
 		return ResponseEntity
-				.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, deleteApplicationById));
+				.ok(new ApiResponse(HttpURLConnection.HTTP_NO_CONTENT, IResponseMessage.SUCCESS, deleteApplicationById));
 
 	}
 }

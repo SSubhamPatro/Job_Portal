@@ -38,7 +38,7 @@ public class RecruiterManagementController {
 
 	@PostMapping("/addRecruiterDetails")
 	@Operation(summary = "ADD ALL DETAILS", description = "Its Adding Recruiter Details")
-	@PreAuthorize("hasRole('ADMIN')")// Only admin can add recruiter
+	@PreAuthorize("permitAll()")// 
 	public ResponseEntity<ApiResponse> addAllDetails(@Valid @RequestBody RecruiterDTO recruiterDto) {
 
 		String details = service.registerRecruiterDetails(recruiterDto);
@@ -74,7 +74,7 @@ public class RecruiterManagementController {
 	public ResponseEntity<ApiResponse>vanishById(@PathVariable Long id){
 		
 		String deleteById = service.removeById(id);
-	  return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, deleteById));
+	  return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_NO_CONTENT, IResponseMessage.SUCCESS, deleteById));
 	}
 	
 	@PutMapping("/updateDetails")

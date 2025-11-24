@@ -98,8 +98,8 @@ public class JobManagementController {
 
 		String removeById = service.removeById(id);
 //		RETURN
-		return ResponseEntity
-				.ok(new ApiResponse(HttpURLConnection.HTTP_OK, "This Id Is Deleted From The DB", removeById));
+		return ResponseEntity                            //204-status code of HTTP_NO_CONTENT
+				.ok(new ApiResponse(HttpURLConnection.HTTP_NO_CONTENT, "This Id Is Deleted From The DB", removeById));
 	}
 
 }

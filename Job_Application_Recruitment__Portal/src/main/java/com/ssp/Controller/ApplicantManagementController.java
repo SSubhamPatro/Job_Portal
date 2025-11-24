@@ -141,7 +141,7 @@ public class ApplicantManagementController {
 		String deleteApplicantDetailsById = service.deleteApplicantDetailsById(id);
 
 		return ResponseEntity
-				.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, deleteApplicantDetailsById));
+				.ok(new ApiResponse(HttpURLConnection.HTTP_NO_CONTENT, IResponseMessage.SUCCESS, deleteApplicantDetailsById));
 
 	}
 

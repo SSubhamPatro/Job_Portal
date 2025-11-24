@@ -73,7 +73,7 @@ public class InterviewManagementController {
 		System.out.println("InterviewManagementController.vanishById()");
 		String deleteInterviewById = service.deleteInterviewById(id);
 		
-		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, deleteInterviewById));
+		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_NO_CONTENT, IResponseMessage.SUCCESS, deleteInterviewById));
 	}
 
 	@PutMapping("/updateDetails/{id}")
