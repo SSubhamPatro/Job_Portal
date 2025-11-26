@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -42,7 +43,15 @@ public class Recruiter {
     @NonNull
     private CompanyType companyType;
     
-  //----------4 Field Added---------  
+    
+    //----------4 Field Added---------  
+    //-----------Again Added one association For Organization
+    
+    @ManyToOne
+    @JoinColumn(name = "organization_id")
+    @JsonManagedReference
+    private Organization organization;
+    
     
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference  // Parent side: Recruiter → Jobs
