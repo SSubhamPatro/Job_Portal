@@ -29,7 +29,10 @@ public class OrganizationController {
 		
 		List<String> searchOrganization = service.searchOrganization(name);
 		
-		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, "All lists", searchOrganization));
+		ApiResponse response = new ApiResponse(HttpURLConnection.HTTP_OK,IResponseMessage.SUCCESS,"All lists");
+		response.setList(searchOrganization);
+		
+		return ResponseEntity.ok(response);
 		
 	}
 	
@@ -37,8 +40,15 @@ public class OrganizationController {
 	public ResponseEntity<ApiResponse> add(@RequestParam String name) {
 		
 		OrganizationDto dto = service.addOrganization(name);
+		ApiResponse response = new ApiResponse(
+	            HttpURLConnection.HTTP_OK,
+	            IResponseMessage.SUCCESS,
+	            "Organization added"
+	    );
+
+	    response.setData(dto); 
 		
-		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, "Organization added", dto));
+		return ResponseEntity.ok(response);
 	}
 	
 }

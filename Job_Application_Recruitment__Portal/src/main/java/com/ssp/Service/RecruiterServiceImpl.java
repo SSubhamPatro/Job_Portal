@@ -1,7 +1,6 @@
 package com.ssp.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +14,7 @@ import com.ssp.DTO.JobDTO;
 import com.ssp.DTO.RecruiterDTO;
 import com.ssp.DTO.RecruiterResponseDTO;
 import com.ssp.DTO.RecruiterUpdateDTO;
+import com.ssp.Entity.Organization;
 import com.ssp.Entity.Recruiter;
 import com.ssp.Entity.Role;
 import com.ssp.Entity.Status;
@@ -35,6 +35,9 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
 
     @Autowired
     private PasswordEncoder encoder;
+    
+    @Autowired
+    private IOrganizationService  organizationService;
 
 
     // ------------------------------------------------------------
@@ -54,7 +57,12 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         account.setPassword(encoder.encode(dto.getPassword()));
         account.setRole(Role.RECRUITER);
         userRepo.save(account);
-
+        
+        //Create New Organization 
+        Organization organization = organizationService.getOrCreateEntity(dto.getOrganization());
+       
+        
+        
         // Create recruiter
         Recruiter recruiter = new Recruiter();
         recruiter.setName(dto.getName());
@@ -64,12 +72,14 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         recruiter.setLocation(dto.getLocation());
         recruiter.setPhone(dto.getPhone());
         recruiter.setCompanyType(dto.getCompanyType());
+        recruiter.setOrganization(organization);
         recruiter.setUserAccount(account);
 
         Long rid = recruiterRepo.save(recruiter).getRid();
         return "Recruiter saved with ID: " + rid;
     }
 
+    
 
     // ------------------------------------------------------------
     // VIEW ALL RECRUITERS

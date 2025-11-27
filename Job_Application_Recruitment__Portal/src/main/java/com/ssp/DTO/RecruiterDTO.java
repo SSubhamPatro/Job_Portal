@@ -39,9 +39,12 @@ public class RecruiterDTO {
     @ValidPhoneNumber
     private String phone;
     
+    
     @NotNull(message = "Company Type Is Required")
     private CompanyType companyType;
     
+    @NotBlank(message = "Organization Is Required")
+    private String organization;
     
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")

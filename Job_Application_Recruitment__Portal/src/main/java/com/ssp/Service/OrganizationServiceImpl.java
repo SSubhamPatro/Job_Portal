@@ -16,7 +16,6 @@ import com.ssp.Repositry.IOrganizationRepositry;
 @Service
 public class OrganizationServiceImpl implements IOrganizationService {
 	
-
     @Autowired
     private IOrganizationRepositry orRepo;
 
@@ -65,10 +64,17 @@ public class OrganizationServiceImpl implements IOrganizationService {
         return new OrganizationDto(org.getId(), org.getName());
     }
 
+  //FOR RECRUITER ONLY 
+    @Override
+    public Organization getOrCreateEntity(String name) {
+
+    	String formatted = formatName(name);
+    	return orRepo.findByNameIgnoreCase(formatted).orElseGet(()->orRepo.save(new Organization(formatted)));
+    }
     
     private String formatName(String name) {
-        name = name.trim();
-        return Arrays.stream(name.split("\\s+"))
+//        name = name.trim();
+        return Arrays.stream(name.trim().split("\\s+"))
                 .filter(s -> !s.isBlank())
                 .map(w -> w.substring(0, 1).toUpperCase() + w.substring(1).toLowerCase())
                 .collect(Collectors.joining(" "));
