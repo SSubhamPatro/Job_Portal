@@ -15,4 +15,6 @@ public interface IEmailService {
 	void sendAccountCreate(String to,String name,String email);
 	
 	void sendOtp(String to,String otp);
+	
+	void sendLink(String to,String name,String email,String link);
 }

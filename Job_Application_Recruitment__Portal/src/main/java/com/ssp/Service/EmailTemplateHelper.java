@@ -67,4 +67,13 @@ public class EmailTemplateHelper implements IEmailTemplate {
 	            + "Regards,\nSupport Team";
 	}
 	
+	@Override
+	public String getLinkTemplate(String name,String email, String link) {
+       
+		return "Welcome, "+name+"!\n\n"
+			     +"Thank you for signing up!We are excited to have you on board."+"\n\n"
+				 +"Before you start posting jobs,we need you to verify your email address,We've sent you an email at "+email+"\n"
+				 +"Please click on the activation link to get started."+"\n\n"
+				 +"If you did not receive any email,please check your spam folder or requst"+link;
+	}
 }

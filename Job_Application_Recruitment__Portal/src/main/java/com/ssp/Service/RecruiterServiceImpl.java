@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssp.DTO.JobDTO;
 import com.ssp.DTO.RecruiterDTO;
@@ -23,6 +24,7 @@ import com.ssp.Exception.DuplicateEmailException;
 import com.ssp.Exception.RecruiterIdNotFoundException;
 import com.ssp.Repositry.IRecruiterRepositry;
 import com.ssp.Repositry.IUserAccountRepositry;
+
 
 @Service
 public class RecruiterServiceImpl implements IRecruiterServiceManagement {
@@ -39,10 +41,14 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
     @Autowired
     private IOrganizationService  organizationService;
 
-
+    @Autowired
+    private IVerificationSerice verificationSerice;
+    
+    
     // ------------------------------------------------------------
     // CREATE RECRUITER
     // ------------------------------------------------------------
+    @Transactional
     @Override
     @CacheEvict(value = "recruiters-viewAllDetails", allEntries = true)
     public String registerRecruiterDetails(RecruiterDTO dto) {
@@ -56,6 +62,7 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         account.setEmail(dto.getEmail());
         account.setPassword(encoder.encode(dto.getPassword()));
         account.setRole(Role.RECRUITER);
+//        SAVE USER FIRST
         userRepo.save(account);
         
         //Create New Organization 
@@ -66,7 +73,7 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         // Create recruiter
         Recruiter recruiter = new Recruiter();
         recruiter.setName(dto.getName());
-        recruiter.setCompanyName(dto.getCompanyName());
+//        recruiter.setCompanyName(dto.getCompanyName());
         recruiter.setDepartment(dto.getDepartment());
         recruiter.setDesignation(dto.getDesignation());
         recruiter.setLocation(dto.getLocation());
@@ -74,11 +81,26 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         recruiter.setCompanyType(dto.getCompanyType());
         recruiter.setOrganization(organization);
         recruiter.setUserAccount(account);
-
+        account.setRecruiter(recruiter);// IMPORTANT: set both sides
         Long rid = recruiterRepo.save(recruiter).getRid();
+     // SAVE USER AGAIN BECAUSE reverse side changed
+       userRepo.save(account);        
+        verificationSerice.createAndSendToken(account);
         return "Recruiter saved with ID: " + rid;
     }
+/*
+ Why save userRepo.save(account) again?
 
+Because:
+
+Recruiter has foreign key to User (owning side)
+
+But User also has recruiter mapped (inverse side)
+
+Hibernate will NOT auto-update inverse side unless saved
+  
+  
+  */
     
 
     // ------------------------------------------------------------
@@ -140,7 +162,7 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         // Update fields
         existing.setName(dto.getName());
         existing.setDepartment(dto.getDepartment());
-        existing.setCompanyName(dto.getCompanyName());
+//        existing.setCompanyName(dto.getCompanyName());
         existing.setDesignation(dto.getDesignation());
         existing.setLocation(dto.getLocation());
 
@@ -164,7 +186,7 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         dto.setRid(recruiter.getRid());
         dto.setName(recruiter.getName());
         dto.setEmail(recruiter.getUserAccount() != null ? recruiter.getUserAccount().getEmail() : "N/A");
-        dto.setCompanyName(recruiter.getCompanyName());
+//        dto.setCompanyName(recruiter.getCompanyName());
         dto.setDepartment(recruiter.getDepartment());
         dto.setDesignation(recruiter.getDesignation());
         dto.setLocation(recruiter.getLocation());

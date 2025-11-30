@@ -10,4 +10,5 @@ public interface IEmailTemplate{
     String getShortListedTemplate(String applicantName,String jobTitle);
     String getAccountCreationTemplate(String applicantName,String email);
     String getOtpTemplate(String email,String otp,long expirySeconds);
+    String getLinkTemplate(String name,String email,String link); 
 }

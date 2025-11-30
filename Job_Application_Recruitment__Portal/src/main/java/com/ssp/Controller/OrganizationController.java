@@ -28,7 +28,7 @@ public class OrganizationController {
 	public ResponseEntity<ApiResponse>search(@RequestParam String name){
 		
 		List<String> searchOrganization = service.searchOrganization(name);
-		
+		System.out.println(searchOrganization);
 		ApiResponse response = new ApiResponse(HttpURLConnection.HTTP_OK,IResponseMessage.SUCCESS,"All lists");
 		response.setList(searchOrganization);
 		

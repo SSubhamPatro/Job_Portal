@@ -31,7 +31,7 @@ public class Recruiter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
     private String name;
-    private String companyName;  
+//    private String companyName;  
     private String department;
 //---New Field Added While Creating Fronted Part I Got To Know These Field Should Also Added
     private String designation;
@@ -59,6 +59,7 @@ public class Recruiter {
     
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private UserAccount userAccount;
 }
 

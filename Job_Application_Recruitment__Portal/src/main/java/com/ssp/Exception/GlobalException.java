@@ -2,6 +2,8 @@ package com.ssp.Exception;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
@@ -19,10 +21,15 @@ import io.swagger.v3.oas.annotations.Hidden;
 @Hidden
 public class GlobalException {
 
+	Map<String, Object>body = new HashMap<String, Object>();
 	@ExceptionHandler(JobIdNotFoundException.class)
 	public ResponseEntity<ApiResponse> jobIdNotFound(JobIdNotFoundException ex) {
 
 		System.out.println("GlobalException.jobIdNotFound()");
+		body.put("Status Code", HttpStatus.NOT_FOUND.value());
+		body.put("Error", "Not Found");
+		body.put("Details", ex.getMessage());
+		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND)
 				.body(new ApiResponse(HttpStatus.NOT_FOUND.value(), IResponseMessage.FAILED, ex.getMessage()));
 	}
@@ -124,9 +131,19 @@ public class GlobalException {
 	
 	@ExceptionHandler(PasswordMismatchException.class)
 	public ResponseEntity<ApiResponse>handlePasswordMismatch(PasswordMismatchException e){
-		
+		System.out.println("GlobalException.handlePasswordMismatch()");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)//400
 			   .body(new ApiResponse(HttpStatus.BAD_REQUEST.value(),IResponseMessage.PASSWORD_MISMATCH,"Password and Confirm Password Do Not Match",e));	
+	}
+	
+	
+	@ExceptionHandler(InvalidTokenException.class)
+	public ResponseEntity<ApiResponse>handleInvalidToken(InvalidTokenException e){
+		
+		System.out.println("GlobalException.handleInvalidToken()");
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+			   .body(new ApiResponse(HttpStatus.BAD_REQUEST.value(), IResponseMessage.INVALID_TOKEN, e.getMessage()));	 
 	}
 	
 	@ExceptionHandler(Exception.class)

@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/Recruiter-Api/addRecruiterDetails").permitAll()
                 .requestMatchers(HttpMethod.GET, "/jobs/viewAllDetails").permitAll()
                 .requestMatchers(HttpMethod.GET,"/jobs/searchFilterJobs").permitAll()
+                .requestMatchers("/organizations/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
 
                 // Role-based endpoints
@@ -78,7 +79,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5175/","http://localhost:5173/","http://localhost:5174/")); // Replace "*" with frontend URL in production
+        configuration.setAllowedOrigins(List.of("http://localhost:5175","http://localhost:5173","http://localhost:5174")); // Replace "*" with frontend URL in production
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

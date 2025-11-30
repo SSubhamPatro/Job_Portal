@@ -11,5 +11,7 @@ public interface IResponseMessage {
 	public static final String INVALID_OTP="INVALID_OTP";
 	public static final String PASSWORD_MISMATCH="PASSWORD_MISMATCH";
 	
+	public static final String INVALID_TOKEN="Invalid Token";
+	
 	
 }

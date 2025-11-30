@@ -21,9 +21,9 @@ public class RecruiterDTO {
     @NotBlank(message = "Email is Required")
     @Email(message = "Invalid email format")
     private String email;
-    
-    @NotBlank(message = "Company name is Required")
-    private String companyName;
+//    
+//    @NotBlank(message = "Company name is Required")
+//    private String companyName;
     
     @NotBlank(message = "Department is Required")
     @Size(min = 2, max = 50, message = "Department must be between 2 and 50 characters")
@@ -32,7 +32,7 @@ public class RecruiterDTO {
     @NotBlank(message = "Designation Is Required")
     private String designation;
     
-    @NotBlank(message = "Location Is Reequired")
+    @NotBlank(message = "Location Is Required")
     @Size(min = 2, max = 100, message = "Location must be between 2 and 100 characters")
     private String location;
     

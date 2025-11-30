@@ -44,7 +44,7 @@ public class ForgotPasswordService implements IForgotPasswordService{
 	@Override
 	public String sendotp(ForgotPasswordRequest req) {
 
-		UserAccount user = userRepo.findByEmail(req.getEmail()).orElseThrow(()->new UserNotFoundException("Email Not Registered"));
+		var s = userRepo.findByEmail(req.getEmail()).orElseThrow(()->new UserNotFoundException("Email Not Registered"));
 		
 		String otp= String.valueOf(new Random().nextInt(900000)+100000);
 		

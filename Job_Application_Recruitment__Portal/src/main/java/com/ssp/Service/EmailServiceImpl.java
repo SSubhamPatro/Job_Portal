@@ -60,9 +60,17 @@ public class EmailServiceImpl implements IEmailService {
 	@Override
 	public void sendOtp(String to, String otp) {
 
-		String body = templateHelper.getOtpTemplate(to, otp, 30);
+		String body = templateHelper.getOtpTemplate(to, otp, 120);
 		String sendMail = sendMail(to, otp, body);
 		System.out.println(sendMail);
+	}
+	
+	@Override
+	public void sendLink(String to, String name, String email, String link) {
+		
+		String body =templateHelper.getLinkTemplate(name, email, link);
+	    String sendEmail=sendMail(to, "Verify Your Email Address", body);
+	    System.out.println(sendEmail);
 	}
 	
 	private String sendMail(String to, String subject, String body) {
