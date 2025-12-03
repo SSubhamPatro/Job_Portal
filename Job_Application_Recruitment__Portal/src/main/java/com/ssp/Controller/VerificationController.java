@@ -26,6 +26,14 @@ public class VerificationController {
 		 String verifyToken = service.verifyToken(token);
 		 return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK, IResponseMessage.SUCCESS, verifyToken));
 	 }
+	
+	@GetMapping("/resend")
+	public ResponseEntity<ApiResponse> resendLink(@RequestParam String email) {
+		
+		String link =service.resendToken(email);
+		return ResponseEntity.ok(new ApiResponse(HttpURLConnection.HTTP_OK,IResponseMessage.SUCCESS,link));
+	}
+	
 
 
 }

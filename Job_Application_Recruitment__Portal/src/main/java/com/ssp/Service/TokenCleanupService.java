@@ -18,7 +18,7 @@ public class TokenCleanupService {
 	@Autowired
 	private IVerificationTokenRepositry tokenRepo;
 
-	@Scheduled(fixedRate = 60000) // Every 1 Minute
+	@Scheduled(cron = "0 */5 * * * *")
 	public void cleanupExpiryTokens() {
 
 		tokenRepo.deleteByExpiryDateBefore(LocalDateTime.now());

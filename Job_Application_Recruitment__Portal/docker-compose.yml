@@ -1,0 +1,58 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: subham
+      MYSQL_DATABASE: job_Application_Rec_portal
+    ports:
+      - "3307:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psubham"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - app-network
+
+  app:
+    build: .
+    container_name: recruitment_portal_app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "9095:9095"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/job_Application_Rec_portal?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: subham
+
+      # Mail config
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: welcomtosspuniverse@gmail.com
+      SPRING_MAIL_PASSWORD: xvzixlefwapyyxfw
+      
+      # AWS S3
+      SPRING_CLOUD_AWS_S3_BUCKET: springresumeproject
+      SPRING_CLOUD_AWS_REGION_STATIC: ap-south-1
+      SPRING_CLOUD_AWS_CREDENTIALS_ACCESS_KEY: AKIAZZ3QDTJV7EUVNDFD
+      SPRING_CLOUD_AWS_CREDENTIALS_SECRET_KEY: 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
+
+      # Frontend URL
+      FRONTEND_URL: http://localhost:5173
+
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:

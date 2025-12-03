@@ -7,4 +7,6 @@ public interface IVerificationSerice {
 	void createAndSendToken(UserAccount account);
 	
 	String verifyToken(String token);
+	
+	String resendToken(String email);
 }
