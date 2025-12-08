@@ -188,11 +188,12 @@ Hibernate will NOT auto-update inverse side unless saved
         dto.setEmail(recruiter.getUserAccount() != null ? recruiter.getUserAccount().getEmail() : "N/A");
 //        dto.setCompanyName(recruiter.getCompanyName());
         dto.setDepartment(recruiter.getDepartment());
-        dto.setDesignation(recruiter.getDesignation());
-        dto.setLocation(recruiter.getLocation());
-        dto.setPhone(recruiter.getPhone());
+        dto.setDesignation(recruiter.getDesignation()!=null?recruiter.getDesignation():null);
+        dto.setLocation(recruiter.getLocation()!=null?recruiter.getLocation():null);
+        dto.setPhone(recruiter.getPhone()!=null?recruiter.getPhone():null);
         dto.setCompanyType(recruiter.getCompanyType());
-
+        dto.setOrganization(recruiter.getOrganization()!=null?recruiter.getOrganization().getName():null);
+        
         List<JobDTO> jobDtos =
                 (recruiter.getJobs() != null)
                         ? recruiter.getJobs().stream().map(job -> {
