@@ -85,7 +85,7 @@ public class RecruiterServiceImpl implements IRecruiterServiceManagement {
         Long rid = recruiterRepo.save(recruiter).getRid();
      // SAVE USER AGAIN BECAUSE reverse side changed
        userRepo.save(account);        
-        verificationSerice.createAndSendToken(account);
+//        verificationSerice.createAndSendToken(account);
         return "Recruiter saved with ID: " + rid;
     }
 /*
